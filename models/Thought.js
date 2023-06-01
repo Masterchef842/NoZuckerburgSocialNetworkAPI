@@ -1,5 +1,6 @@
 const dayjs = require('dayjs')
 const { Schema, model } = require('mongoose');
+const reactionSchema = require('./Reaction');
 
 function formatDate(date){
     const formattedDate=dayjs(date).formatDate('DD/MM/YYYY')
@@ -23,11 +24,7 @@ const thoughtSchema = new Schema(
             type: String,
             required: true
         },
-        reactions: [{
-            type: Schema.Types.ObjectId,
-            ref: 'reaction'
-
-        }]
+        reactions: [reactionSchema]
     },
     {
         toJSON: {
