@@ -1,5 +1,5 @@
 const { ObjectId } = require("mongoose").Types;
-const { Thought, User } = require("../models");
+const { User, Thought } = require("../models");
 
 module.exports = {
   //getAll
@@ -16,7 +16,7 @@ module.exports = {
   //getOneUser
   async getOneUser(req, res) {
     try{
-        const userData = await User.findOne({_id: req.params.userId}).populate('friends')
+        const userData = await User.findOne({_id: req.params.userId}).populate('friends').populate('thoughts')
         if(!userData){
             return res.status(404).json({message: "User Not Found"})
         }
@@ -73,7 +73,7 @@ module.exports = {
     try{
         const friendData =await User.findOne({_id: req.body.friendId})
         if(!friendData){
-            return res.status(404).json({message: "Cannot add a friend that doesnt exist"})
+            return res.status(404).json({message: "Cannot add a friend that doesn't exist"})
         }
         const userData = await User.findOneAndUpdate(
             {_id: req.params.userId},
@@ -94,7 +94,7 @@ module.exports = {
     try{
         const friendData =await User.findOne({_id: req.body.friendId})
         if(!friendData){
-            return res.status(404).json({message: "Cannot add a friend that doesnt exist"})
+            return res.status(404).json({message: "Cannot add a friend that doesn't exist"})
         }
         const userData = await User.findOneAndUpdate(
             {_id: req.params.userId},
