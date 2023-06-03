@@ -1,0 +1,2 @@
+const userData=[]
+const thoughtData=[]
