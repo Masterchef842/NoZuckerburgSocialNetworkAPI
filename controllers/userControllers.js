@@ -40,16 +40,6 @@ module.exports = {
         return res.status(500).json(err);
     }
   },
-
-  async updateUs(req, res){
-
-    try{
-
-    }catch(err){
-        console.log(err);
-        return res.status(500).json(err);
-    }
-  },
   //updateUser
 
   async updateUser(req, res){
@@ -101,14 +91,19 @@ module.exports = {
         if(!friendData){
             return res.status(404).json({message: "Cannot add a friend that doesn't exist"})
         }
-        const userData = await User.findOneAndUpdate(
-            {_id: req.params.userId},
-            {$pull: {friends: req.body.friendId}},
-            {runValidators: true, new: true})
+        const userData = await User.findOne(
+            {_id: req.params.userId})
+            
         if(!userData){
             return res.status(404).json({message: "User Not Found"})
         }
-        
+        userData.friends.pull(req.body.friendId)
+        console.log(userData)
+        await userData.save();
+
+        friendData.friends.pull(req.params.userId)
+        console.log(friendData)
+        await friendData.save();
         return res.status(200).json({message: "successfully removed friend"})
     }catch(err){
         console.log(err);

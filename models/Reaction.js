@@ -1,10 +1,6 @@
 const { Schema, Types } = require('mongoose');
 const dayjs = require('dayjs')
 
-function formatDate(date){
-    const formattedDate=dayjs(date).formatDate('DD/MM/YYYY')
-    return formattedDate;
-}
 
 const reactionSchema = new Schema(
     {
@@ -35,6 +31,12 @@ const reactionSchema = new Schema(
         },
     }
 )
+
+function formatDate(date){
+
+    const formattedDate= date.toLocaleDateString("en-US")
+    return formattedDate;
+}
 
 
 module.exports=reactionSchema
