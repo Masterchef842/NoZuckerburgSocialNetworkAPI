@@ -6,7 +6,7 @@ module.exports = {
   async getAllUsers(req, res) {
     try{
         const allUsers = await User.find()
-        return res.status(200).json({allUsers})
+        return res.status(200).json(allUsers)
     }catch(err){
         console.log(err);
         return res.status(500).json(err);
@@ -20,7 +20,7 @@ module.exports = {
         if(!userData){
             return res.status(404).json({message: "User Not Found"})
         }
-        return res.status(200).json({userData})
+        return res.status(200).json(userData)
     }catch(err){
         console.log(err);
         return res.status(500).json(err);
@@ -61,7 +61,7 @@ module.exports = {
         if(!userData){
             return res.status(404).json({message: "User Not Found"})
         }
-        return res.status(200).json({userData})
+        return res.status(200).json(userData)
     }catch(err){
         console.log(err);
         return res.status(500).json(err);
@@ -79,6 +79,11 @@ module.exports = {
             {_id: req.params.userId},
             {$addToSet: {friends: req.body.friendId}},
             {runValidators: true, new: true})
+
+        const friendData2 = await User.findOneAndUpdate(
+                {_id: req.body.friendId},
+                {$addToSet: {friends: req.params.userId}},
+                {runValidators: true, new: true})
         if(!userData){
             return res.status(404).json({message: "User Not Found"})
         }
@@ -118,7 +123,8 @@ module.exports = {
         if(!userData){
             return res.status(404).json({message: "User Not Found"})
         }
-        return res.status(200).json({userData})
+    
+        return res.status(200).json(userData)
     }catch(err){
         console.log(err);
         return res.status(500).json(err);

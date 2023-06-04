@@ -16,6 +16,17 @@ async getAll(req,res){
 
 //getOne
 
+async getOne(req,res){
+    try{
+        const thoughtData = await Thought.findOne({_id : req.params.id})
+        res.status(200).json(thoughtData)
+    }catch(err){
+        console.log(err)
+        res.status(500).json(err)
+    }
+},
+
+
 //createNew
 async createThought(req,res){
     try{

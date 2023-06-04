@@ -22,10 +22,10 @@ const thoughtSchema = new Schema(
             required: true,
             validate: {
                 validator : async function(v){
-                    const userExists = await User.findOne({username: v})
+                    const userExists = await User.findOne({username: v});
                     if(userExists)
-                        return true
-                    return false
+                        return true;
+                    return false;
                 }
             }
         },
